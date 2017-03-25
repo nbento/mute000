@@ -1,0 +1,58 @@
+******************************* PASTA
+cd N:\E\www\_TemplateNovosExercicios
+
+//=========================== SUBLIME SNIPPETS
+ctrl + shift + spacebar: SELECCIONA TODO O CONTEÚDO DO ELEMENTO;
+							 EX: NUMA FUNC., CLICAR A SEGUIR AO { E USAR O ATALHO
+CUSTOM SNIPPETS  
+	CUSTOM SNIPPETS    2016.05
+		function(){ return } 							 »»» fr
+		<!-- -->         								 »»» ccc + TAB (2x)  	HTML, PRESSIONAR TAB KEY 2 VEZES
+		/* */ 											 »»» ccc + TAB 			CSS  
+		_cons(":::" + ); 								 »»» ccc + TAB (2x)  	JS, PRESSIONAR TAB KEY 2 VEZES
+		var = ; 		 								 »»» vv
+		display: block;   width: auto;   height: auto;   »»» ddd
+		position: relative;   top: 0;   left: 0; 		 »»» ppp
+		margin: 0 0 0 0; 								 »»» mmm
+		.NAMESTYLE {	 }								 »»» sss	
+		border: 2px yellow dashed; 					  	 »»» bbb 
+		background: url(../imgs/) ...;   			 	 »»» baa
+	INDENTATION  (Ctrl + Alt + Shift + F)   HTML Beautify 
+
+//=========================== GULP FOR SASS + BROWSERSYNC
+2016.08 IMPORTANTE!!!
+	SASS + BROWSERSYNC SÃO ACTIVADOS A PARTIR DA PASTA N:\E\www\Gulp,
+	BASTA NO FILE gulpfile.js  ALTERAR PARA O URL DO PROJECTO, NA VAR url_base
+		
+		----- OLD
+			compass watch sass\estilos.scss
+			browser-sync start --server --files "*.html,*.htm, css/*.css, js/*.js"
+	http://localhost:3000/
+	http://192.168.1.2:3000
+//=========================== SASS
+N:\E\www\SASS\content2
+
+compass watch sass\estilos.scss
+
+compass create 
+
+//=========================== BROWSER-SYNC
+browser-sync start --server --files "*.html,*.htm, css/*.css, js/*.js"
+
+//=========================== IP
+IP http://192.168.1.2         ipconfig
+
+//=========================== ÚTIL PARA BROWSERSYNC E TESTES NO GENYMOTION !!!
+NOS SIMULADORES, TEM DE SE ACTIVAR O DEBUGGING VIA USB, TAL COMO NO SMARTPHONE FÍSICO,
+	APENAS 1x, NO INÍCIO DA UTILIZAÇÃO;
+	SETTINGS »»» ABOUT PHONE »»» 7 clicks em Build Number
+http://192.168.1.2:3000
+
+
+//=========================== NOTAS GERAIS
+
+
+
+//=========================== HISTÓRICO
+	2016.07 
+		ADICIONADO query + bonzo, substitutos do jQuery

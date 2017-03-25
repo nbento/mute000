@@ -1,0 +1,29 @@
+/*
+	CUSTOM SNIPPETS  
+	2016.05
+		<!-- -->         	 						 »»» ccc + TAB (2x)  HTML, PRESSIONAR TAB KEY 2 VEZES
+		CSS COMMENTS /*   *\/ 				 		 »»» ccc + TAB CSS  
+		_cons(":::" + ); 							 »»» ccc + TAB (2x)  JS, PRESSIONAR TAB KEY 2 VEZES
+	var = ; 		 								 »»» vv
+	display: block;   width: auto;   height: auto;   »»» ddd
+	position: relative;   top: 0;   left: 0; 		 »»» ppp
+	margin: 0 0 0 0; 								 »»» mmm
+	background: url(../imgs/) top center no-repeat;  »»» ba
+	.NAMESTYLE {									 »»» sss
+		
+	}
+	border: 1px  red solid; 						 »»» bbb
+
+*/
+  
+@charset 'UTF-8';
+
+//@import 'fonts';
+    
+@import 'variables';   
+@import 'mixins';  
+//@import '_columns_bootstrap.scss';
+
+@import 'main'; 
+
+@import 'comp/comps';

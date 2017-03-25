@@ -1,0 +1,61 @@
+/*
+	CUSTOM SNIPPETS  
+	2016.05
+		<!-- -->         	»»» ccc + TAB (2x)  HTML, PRESSIONAR TAB KEY 2 VEZES
+		CSS COMMENTS /*   *\/ 				»»» ccc + TAB CSS  
+		_cons(":::" + ); 	»»» ccc + TAB (2x)  JS, PRESSIONAR TAB KEY 2 VEZES
+	var = ; 		 »»» vv
+	display: block;   width: auto;   height: auto;   »»» ddd
+	position: relative;   top: 0;   left: 0; 		 »»» ppp
+	margin: 0 0 0 0; 								 »»» mmm
+	background: url(../imgs/) top center no-repeat;  »»» ba
+	.NAMESTYLE {									 »»» sss
+		
+	}
+	----- border: 1px  red solid; 						 »»» bbb
+
+*/
+
+
+*{
+		margin:0;
+		padding:0;	
+}
+
+body{
+		background-color: black;
+		color: yellow;			
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:14px;	
+		font-weight:normal;
+}
+ 
+.div1 {
+    background-color: #333;
+    //border: 4px red dashed;
+    display: inline-block;
+    padding: 0;
+    width: 400px;
+    height: 300px;
+    vertical-align: top;
+
+    @include flexbox( $direction: row,                            
+                $align_main_axis: flex-end,                 
+                $align_second_axis: flex-end,               
+                $expand_mode: 0,                            
+                $wrap_mode: no-wrap,
+                $align_second_axis_wrap_mode: flex-start,  
+                $shrink_mode: 0                          
+              ); 
+}
+
+.div2 {
+    background-color: #666;
+    //border: 2px green dashed;
+    @include borders_teste($cor:yellow, $thick:1px, $style:dashed);
+    display: inline-block;
+    margin: 0 6px 0 0;
+    width: 100px;
+    height: 200px;
+    //vertical-align: top;
+}

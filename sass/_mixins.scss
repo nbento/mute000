@@ -1,0 +1,371 @@
+
+// .............................................. 
+// .............................................. 
+// .............................................. 
+// .............................................. 
+//======================
+@mixin borders_teste($cor:red, $thick:1px, $style:dotted)
+{
+	border: $cor   $thick   $style;
+} 
+//======================
+@mixin vendorize($property, $value) 
+{     
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+    #{$property}: $value; 
+}
+//======================
+/* ALIGN FLEXBOX - VS MAIS RECENTE; MIXIN DE OLD BOX SYNTAX + NEW CODE FLEXBOX
+
+*margin: auto;* DÁ PROBLEMAS NOS ALINHAMENTOS
+height: auto no container dá problemas no IE10
+
+*/
+/*$direction: row,                            /*row   |   column  |  row-reverse   |   column-reverse;*/
+/*$align_main_axis: flex-end,                 /*flex-start   |  flex-end  |  center space-between   |    space-around (NOT IE10)*/  
+/*$align_second_axis: flex-end,               /*flex-start  |   flex-end  |  center*/
+/*$expand_mode: 0,                             /*1 | 0  */ 
+/*$wrap_mode: wrap                            /*nowrap | wrap*/
+@mixin flexbox( $direction: row,                            
+                $align_main_axis: flex-end,                 
+                $align_second_axis: center,               
+                $expand_mode: 0,                            
+                $wrap_mode: wrap,
+                $align_second_axis_wrap_mode: flex-start,  
+                $shrink_mode: 0                          
+              ) 
+{ 
+    /*==========================================
+    IE10; FX18>=; CHROME 26>=; OPERA NEXT */
+   /*========================================== VARS DE: DIRECTION, ALIGN X, E ALIGN Y */
+   /*$direction: row;*/                  /*row;    column;     row-reverse;    column-reverse;*/
+                                     /*OLD PARA box: box-direction:  normal | reverse | inherit*/ 
+   /*$align_main_axis: flex-end;*/       /*flex-start     flex-end    center space-between       space-around*/  
+   /*$align_second_axis: flex-end;     /*flex-start     flex-end    center*/                       
+    
+    /*========================================== DISPLAY*/ 
+    display: -webkit-box;   
+    display: -moz-box;
+    display: -ms-flexbox;   
+    display: -webkit-flex;
+    display: flex;
+
+    /*========================================== FLEX-DIRECTION*/
+    $direction_old:  $direction;
+   /* $direction_old2: $direction;*/   /* DESACTIVADO: SÓ BROWSERS <= FIREFOX 17 SÃO AFECTADOS */
+    
+    @if $direction == row {   $direction_old: horizontal;
+
+    }@if $direction == column {  $direction_old: vertical;
+    }    
+    
+    -webkit-box-direction:  normal; /*$direction_old2;  */                      /*normal | reverse | inherit   */
+    -moz-box-direction:     normal; /*$direction_old2;  */ /* <=Fx17*/
+    -webkit-box-orient:     $direction_old;   
+    -moz-box-orient:        $direction_old; /*<=Fx17*/  /*horizontal|vertical|inline-axis|block-axis|inherit*/
+    
+    -ms-flex-direction:     $direction;
+
+    -webkit-flex-direction: $direction;      
+    flex-direction:         $direction;
+    
+    /*========================================== JUSTIFY-CONTENT main axis*/
+    /*flex-start    flex-end    center      space-between       space-around*/
+    /*OLD  box-pack: start|end|center|justify;*/
+    $align_main_axis_old: $align_main_axis;
+    
+    @if $align_main_axis == flex-end {   $align_main_axis_old: end;
+
+    }@if $align_main_axis == flex-start {  $align_main_axis_old: start;
+
+    }@if $align_main_axis == space-between {  $align_main_axis_old: justify;
+
+    }@if $align_main_axis == space-around {  $align_main_axis_old: justify; /* NÃO É POSSÍVEL SIMULAR EXACTA/ O space-around*/
+    }
+
+    -webkit-box-pack:           $align_main_axis_old;    
+    -moz-box-pack:              $align_main_axis_old;  
+
+    -ms-flex-pack:              $align_main_axis_old;
+
+    -webkit-justify-content:    $align_main_axis;    
+    justify-content:            $align_main_axis;
+    
+    /*==========================================  ALIGN-ITEMS  secondary axis*/
+    /*               flex-start     flex-end    center      stretch... */
+    /*OLD  box-pack: start          |end        |center     */   
+    $align_second_axis_old: $align_second_axis;
+    
+    @if $align_second_axis == flex-end {
+            $align_second_axis_old: end;
+
+    }@if $align_second_axis == flex-start {
+            $align_second_axis_old: start;
+    }
+
+    -webkit-box-align:   $align_second_axis_old;    
+    -moz-box-align:      $align_second_axis_old;        /*Fx16,17*/        
+    
+    -ms-flex-align:      $align_second_axis_old;        /*IE10*/
+    
+    -webkit-align-items: $align_second_axis;            /*Ch26,27>; Fx*/
+    align-items:         $align_second_axis;            /*Ch29>; Fx23>*/
+
+    /*========================================== FLEX-WRAP*/
+    -webkit-flex-wrap:  $wrap_mode;
+    -moz-flex-wrap:   $wrap_mode;    
+    -ms-flex-wrap:      $wrap_mode; 
+    flex-wrap:          $wrap_mode; 
+
+    
+    /*==========================================   ALIGN-CONTENT  */
+    //ÚTIL APENAS COM MULTILINE (QUANDO A PROP. flex-wrap: wrap);
+    //ALINHA OS ELEMENTOS NA CROSS/SECONDARY AXIS, 
+    -webkit-align-content:  $align_second_axis_wrap_mode;    
+    -ms-flex-line-pack:     $align_second_axis_wrap_mode;    
+    align-content:          $align_second_axis_wrap_mode; 
+    /**/  
+
+    /*==========================================  CHILDS  */
+    > *{
+                     /*GROW  SHRINK  BASIS*/
+        /*flex:         0       1   auto;*/
+            
+        /*=========================================*/
+       /* -webkit-box-ordinal-group: 0;
+        -moz-box-ordinal-group: 0;
+        -webkit-order: 0;
+        -ms-flex-order: 0;
+        order: 0;
+        */
+        -webkit-box-flex:   $expand_mode;
+        -moz-box-flex:      $expand_mode;
+        -webkit-flex:       $expand_mode $shrink_mode auto;
+        -ms-flex:           $expand_mode $shrink_mode auto;
+        flex:               $expand_mode $shrink_mode auto; 
+    }
+}
+//......................
+/* ALIGN FLEXBOX - SINGLE ITEM */
+//center | flex-start | flex-end | space-between | space-around | stretch 
+//$valor: center |  flex-start | ... »»» ESTÁ RELACIONADO COM O 2º AXIS
+//$expand_mode,  $shrink_mode        »»» ESTÁ RELACIONADO COM O 1º AXIS (ATRIBUIDO EM @mixin flexbox( $direction: row | column )
+@mixin flexbox_align_self($valor, $expand_mode: 0, $shrink_mode: 0)
+{
+    /* 
+     https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
+                        The align-self CSS property aligns flex items of the current 
+                        flex line overriding the align-items value. 
+                        If any of the flex item's cross-axis margin is set to auto, 
+                        then align-self is ignored.
+                        Fx: >=18.0 (18.0) (behind a pref) [1]; 20.0 (20.0)
+    */                    
+    /* auto | flex-start | flex-end | center | baseline | stretch*/
+    -webkit-align-self:     $valor;   /*Chrome 26; 27; Safari 6*/
+    -ms-flex-item-align:    $valor;
+    align-self:             $valor; 
+
+     -webkit-box-flex:   $expand_mode;
+     -moz-box-flex:      $expand_mode;
+     -webkit-flex:       $expand_mode $shrink_mode auto;
+     -ms-flex:           $expand_mode $shrink_mode auto;
+      flex:              $expand_mode $shrink_mode auto; 
+}
+//======================
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes  #{$animation-name} { @content; }
+  @-moz-keyframes     #{$animation-name} { @content; }
+  @keyframes          #{$animation-name} { @content; } 
+}
+//Ex: @include keyframes('animate-stripes') {0% {background-position: 0 0;} 100% {background-position: 100% 0; } }
+
+@mixin animation($str) {
+    -webkit-animation:  #{$str};
+    -moz-animation:     #{$str};
+    -ms-animation:      #{$str};
+    animation:          #{$str};
+}
+//Ex: @include animation('animate-stripes 5s linear infinite');
+
+//======================
+@mixin gradient_simple($valorInit:rgba(0,0,255,1),   $valorEnd: rgba(0,255,0,1), $direction: to bottom, $direction2: 45deg )
+{
+    //OLD   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,255,1)), color-stop(100%, rgba(0,255,0,1)))  top left no-repeat;
+    background: -webkit-linear-gradient($direction2, $valorInit 0%, $valorEnd 100%) top left no-repeat;
+    //background: -o-linear-gradient(top, rgba(22,64,133,1) 0%, rgba(25,120,171,1) 100%);
+    //background: -ms-linear-gradient(top, rgba(22,64,133,1) 0%, rgba(25,120,171,1) 100%);
+    
+    background: linear-gradient($direction, $valorInit 0%, $valorEnd 100%);
+    //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#164085', endColorstr='#1978ab', GradientType=0 );   
+}
+//EXEMPLO »»»   @include gradient_simple(rgba(0,255,0,1), rgba(255,0,0,1), from top to left, top left );
+
+//======================
+@mixin gradient($r1, $g1, $b1,   $r2, $g2, $b2 )
+{
+  background: -webkit-linear-gradient(top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+  background: -moz-linear-gradient(top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+  background: -ms-linear-gradient(top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+  background: -o-linear-gradient(top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+  background: linear-gradient(to top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+}
+
+//======================
+@mixin gradient2(   $angle: 135deg, 
+                        $fs_tcolor: (rgba(255, 255, 255, 1) 25%), 
+                        $sec_color: (transparent 25%, transparent 50%), 
+                        $tr_color: (rgba(255, 255, 255, 1) 50%),
+                        $ft_color: (rgba(255, 255, 255, 1) 75%),
+                        $fith_color: (transparent 75%, transparent)
+                    ) {
+        
+        
+                                    
+        background-image: -webkit-linear-gradient($angle, 
+                                                
+                                                         $fs_tcolor,
+                                                 
+                                                          $sec_color,
+                                                          $tr_color,
+                                                          $ft_color,
+                                                          $fith_color
+                                               );
+        background-image: -moz-linear-gradient($angle, $fs_tcolor, 
+                                                          $sec_color,
+                                                          $tr_color,
+                                                          $ft_color,
+                                                          $fith_color
+                                               );
+        background-image: -ms-linear-gradient($angle, $fs_tcolor, 
+                                                          $sec_color,
+                                                          $tr_color,
+                                                          $ft_color,
+                                                          $fith_color
+                                               );           
+         background-image: linear-gradient($angle, $fs_tcolor, 
+                                                          $sec_color,
+                                                          $tr_color,
+                                                          $ft_color,
+                                                          $fith_color
+                                               );                                                                                                                  
+        //background: -webkit-linear-gradient($angle, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%)
+        //background:         linear-gradient(to top, rgba($r1, $g1, $b1, 1) 20%, rgba($r2, $g2, $b2, 1) 80%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//======================
+
+//======================
+@mixin posicionamento2( $valor_position,    $coordY, $valor_coordY,    $coordX, $valor_coordX)
+{								  /*top/bottom*/                /*left/right*/
+	position: $valor_position;    #{$coordY}: $valor_coordY;    #{$coordX}: $valor_coordX;
+}
+//======================
+@mixin display_w_h($display:block, $width:20px, $height:20px)
+{
+  display: $display;   width: $width;   height: $height;
+}
+
+//======================
+/*
+2014.01.12 - ESTES MIXINS ESTÃO DESACTUALIZADOS; VS +RECENTE ESTÁ EM E:\www\FlexBox_SASS
+ONDE FOI CRIADA UMA VS QUE FUNCIONA EM IE10, OPERA NEXT, GOOGLE >=26 E FX >=23
+POSICIONAR COM FLEXBOX; NÃO FUNCIONA NO IE10(UTILIZAR O MIXIN ABAIXO)
+*/
+/*
+@mixin flebox_align( $eixo:row, $align_x:center, $align_y:center )
+{
+	display: flex;
+	flex-direction: $eixo;		//row;		column;		row-reverse;	column-reverse;
+	flex-wrap: nowrap;	 //nowrap| wrap | wrap-reverse
+	
+	justify-content: $align_x;  //flex-start	flex-end  center	space-between		space-around
+	align-items: $align_y;   	//flex-start  flex-end  center 		... 
+
+	> *
+	{
+						//GROW  SHRINK  BASIS
+			flex: 		0		0 		auto;
+	}
+}
+*/
+/*POSICIONAR COM BOX
+@mixin vendorize_box_pack( $prop_x:center, $prop_y:center )
+{
+	//box-pack: start|end|center|justify;
+	
+	// Internet Explorer 10 NOTA: OS CHILD ELEMENTS NÃO DEVEM TER MARGIN AUTO OU INHERIT
+	display: -ms-flexbox;
+	-ms-flex-pack: $prop_x; 
+	-ms-flex-align: $prop_y;
+
+	// Safari, Chrome, and Opera 
+	display: -webkit-box;
+	-webkit-box-pack: $prop_x;
+	-webkit-box-align: $prop_y;
+
+	// Firefox 
+	display: -moz-box; 				//NÃO FUNCIONA SE ELEMENTO TIVER FLOAT, POSITION:ABSOLUTE; E DEVE TER display:block (CASO CONTRÁRIO, O WIDTH FICA EM AUTO)
+	-moz-box-pack: $prop_x;
+	-moz-box-align: $prop_y;
+
+	// W3C 
+	display: box;
+	box-pack: $prop_x;
+	box-align: $prop_y;
+}
+*/
+
+/*
+@mixin box_sizing()
+{
+  -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+}
+*/
+    /*
+@mixin btn_selected()
+{
+  > a{  color: yellow; 
+      border-bottom: 6px solid blue;
+      @include gradient(255,0,0,  0, 255, 0); 
+    }
+  .sub_menu{
+    display: block;
+  }         
+}
+
+@mixin btn_idiomas_selected()
+{
+  color: #666;
+}
+*/
+/*
+@mixin posicionamento($position:absolute, $top:0px, $left:0px)
+{
+  position: $position;   top: $top;   left: $left;   
+}
+*/
+// .............................................. 
+// .............................................. 
+// .............................................. 
+// .............................................. 
+
+
